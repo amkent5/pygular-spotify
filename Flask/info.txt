@@ -1,0 +1,8 @@
+Followed guide on:
+https://pythonspot.com/en/flask-web-app-with-python/
+
+app.py file creates link to webserver and controls url paging and html template loads.
+
+content.html controls content of webpage and extends the layout.html file which in turn controls styling.
+
+
