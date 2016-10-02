@@ -1,22 +1,41 @@
+import spotipy
 import math as m
 from flask import Flask, flash, redirect, render_template, request, session, abort
 from random import randint
 
 app = Flask(__name__)
 app.debug = True
+sp = spotipy.Spotify()
+
+# use method of insertion decribed in http://jsfiddle.net/euQ5n/175/
+def buildHtmlString(l_uris):
+	
+	output_str = '<table align="center" style="width:60%">'
+	end_str = '</table>'
+
+	# for every even pass need to close the tr
+	for i, uri in enumerate(l_uris):
+		if i % 2 == 0:
+			output_str += '<tr><td><iframe src=' \
+				+ '"https://embed.spotify.com/?uri=' \
+				+ uri \
+				+ '&view=coverart" frameborder="0" allowtransparency="true">' \
+				+ '</iframe></td>'
+		else:
+			output_str += '<td><iframe src=' \
+				+ '"https://embed.spotify.com/?uri=' \
+				+ uri \
+				+ '&view=coverart" frameborder="0" allowtransparency="true">' \
+				+ '</iframe></td></tr>'
+
+	output_str += end_str
+	return output_str
 
 @app.route("/")
 def index():
 	return "Flask App"
 
-"""
-@app.route("/<string:name>/")
-def hello(name):
-	return render_template(
-		'content.html', name=name)
-"""
-
-# Pass multiple variables to content.html (the name and a random quote)
+# Pass multiple variables to content.html (the artists name, list of top 20 track URI's and a random quote)
 @app.route("/<name>")
 def appCode(name):
 
@@ -27,8 +46,18 @@ def appCode(name):
 		"'Mathematics is the key and door to the sciences.' -- Galileo Galilei",
 		"'Not everyone will understand your journey. Thats fine. Its not their journey to make sense of. Its yours.' -- Unknown"
 		]
-	randomNumber = randint(0,len(quotes)-1) 
+	randomNumber = randint(0,len(quotes)-1)
 	rand_quote = quotes[randomNumber] 
+
+	# get top 20 track URIs for searched artist and return in list form
+	results = sp.search(q=name, limit=20)
+	l_res = []
+	for i, t in enumerate(results['tracks']['items']):
+		l_res.append(str(t['uri']))
+
+	# form htmlString
+	htmlString = buildHtmlString(l_res)
+	print htmlString
 
 	# locals returns all local variables within the function to the content.html page
 	return render_template(

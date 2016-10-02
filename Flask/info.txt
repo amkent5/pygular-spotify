@@ -5,4 +5,10 @@ app.py file creates link to webserver and controls url paging and html template 
 
 content.html controls content of webpage and extends the layout.html file which in turn controls styling.
 
+PROGRESS:
 
+The name parameter will now be the Artists name you wish to search.
+
+The code in the function appCode() will run the spotipy code that returns a list of the top 20 track URIs for the searched artist.
+
+We then build a html snippet and parse to conetents.html for page rendering.

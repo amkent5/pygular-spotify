@@ -4,7 +4,7 @@
 
 <div class="block1">
 <br>	
-<h1>User/ App: {{name}}/ Flask Webserver Spotify API Player</h1>
+<h1>Artist/ App: {{name}}/ Flask Webserver Spotify API Player V2</h1>
 <br>
 <br>
 <h2>Here is an interesting quote for you: </h2>
@@ -14,20 +14,35 @@
 <p>
 Randint selected: {{randomNumber}}
 </p>
+<!--
 <p>
-<iframe src="https://embed.spotify.com/?uri=spotify:track:6HMvJcdw6qLsyV1b5x29sa&view=coverart" frameborder="0" allowtransparency="true"></iframe>
+Artist URIs: {{l_res}}
 </p>
-<p>
-<iframe src="https://embed.spotify.com/?uri=spotify:track:6HMvJcdw6qLsyV1b5x29sa&view=coverart" frameborder="0" allowtransparency="true"></iframe>
+<p id="p1">
+{{htmlString}}
 </p>
-<p>
-<iframe src="https://embed.spotify.com/?uri=spotify:track:6HMvJcdw6qLsyV1b5x29sa&view=coverart" frameborder="0" allowtransparency="true"></iframe>
-</p>
-<p>
-<iframe src="https://embed.spotify.com/?uri=spotify:track:6HMvJcdw6qLsyV1b5x29sa&view=coverart" frameborder="0" allowtransparency="true"></iframe>
-</p>
-<p>
-<iframe src="https://embed.spotify.com/?uri=spotify:track:6HMvJcdw6qLsyV1b5x29sa&view=coverart" frameborder="0" allowtransparency="true"></iframe>
-</p>
+-->
+<div id="test">
+</div>
+
+<script type="text/javascript">
+
+	var str = '{{htmlString}}';
+
+	function htmlDecode(input){
+		var e = document.createElement('div');
+		e.innerHTML = input;
+		return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+	}
+
+	var decodedStr = htmlDecode(str),
+
+	// console.log(decodedStr);
+
+	div = document.getElementById( 'test' );
+	div.insertAdjacentHTML( 'beforeend', decodedStr );
+
+</script>
+
 </div>
 {% endblock %}
